@@ -1,80 +1,110 @@
 {% extends "layout.html" %}
+{% import "_macros.html" as macros %}
 {% block container %}
 
 <div class="w-full max-w-6xl px-4 py-6">
 
-  <h2 class="text-2xl font-bold text-gray-800 mb-4">
-    Alumnos
-  </h2>
+  <h2 class="text-2xl font-bold text-gray-800 mb-4">Alumnos</h2>
 
   <div class="relative overflow-x-auto bg-white shadow-sm rounded-lg border border-gray-200">
 
-    <!-- Barra superior (Nuevo) -->
+    <!-- Barra superior -->
     <div class="p-3 border-b border-gray-200">
-      <a href="{{ url_for('Alumnos') }}"
-         class="w-full inline-flex items-center gap-2 justify-start
-                text-success bg-neutral-primary border border-success
-                hover:bg-success hover:text-white focus:ring-4 focus:ring-neutral-tertiary
-                font-medium leading-5 rounded-base text-sm px-4 py-3 focus:outline-none">
+      <button data-modal-target="modal-nuevo" data-modal-toggle="modal-nuevo" type="button"
+        class="w-full inline-flex items-center gap-2 justify-start
+               text-success bg-neutral-primary border border-success
+               hover:bg-success hover:text-white focus:ring-4 focus:ring-neutral-tertiary
+               font-medium leading-5 rounded-base text-sm px-4 py-3 focus:outline-none">
+        <!-- icon + -->
         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
           <path d="M10 4a1 1 0 0 1 1 1v4h4a1 1 0 1 1 0 2h-4v4a1 1 0 1 1-2 0v-4H5a1 1 0 1 1 0-2h4V5a1 1 0 0 1 1-1z"/>
         </svg>
         Nuevo
-      </a>
+      </button>
     </div>
 
+    <!-- TABLA -->
     <table class="w-full text-sm text-left text-gray-700">
       <thead class="bg-gray-50 border-b border-gray-200">
         <tr>
           <th class="px-6 py-3 font-semibold">Nombre</th>
           <th class="px-6 py-3 font-semibold">Apellido</th>
           <th class="px-6 py-3 font-semibold">Contacto</th>
-          <th class="px-6 py-3 font-semibold text-right">Acciones</th>
+          <th class="px-6 py-3 font-semibold text-center">Editar</th>
+          <th class="px-6 py-3 font-semibold text-center">Detalles</th>
+          <th class="px-6 py-3 font-semibold text-center">Eliminar</th>
         </tr>
       </thead>
 
       <tbody>
         {% for alum in alumno %}
         <tr class="bg-white border-b border-gray-200">
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-            {{ alum.nombre }}
+          <td class="px-6 py-4 font-medium text-gray-900">{{ alum.nombre }}</td>
+          <td class="px-6 py-4">{{ alum.apaterno }}</td>
+          <td class="px-6 py-4">{{ alum.email }}</td>
+
+          <!-- EDITAR -->
+          <td class="px-6 py-4 text-center">
+            <a href="modificar?id={{ alum.id }}"
+              class="inline-flex items-center gap-1 text-warning bg-neutral-primary border border-warning
+                     hover:bg-warning hover:text-white focus:ring-4 focus:ring-neutral-tertiary
+                     font-medium leading-5 rounded-base text-sm px-3 py-2.5">
+              
+              <!-- pencil icon -->
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                   viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M15.232 5.232l3.536 3.536M9 11l6 6L5 19l2-10z"/>
+              </svg>
+              Editar
+            </a>
           </td>
-          <td class="px-6 py-4">
-            {{ alum.apaterno }}
+
+          <!-- DETALLES -->
+          <td class="px-6 py-4 text-center">
+            <a href="detalles?id={{ alum.id }}"
+              class="inline-flex items-center gap-1 text-fg-brand bg-neutral-primary border border-brand
+                     hover:bg-brand hover:text-white focus:ring-4 focus:ring-brand-subtle
+                     font-medium leading-5 rounded-base text-sm px-3 py-2.5">
+              
+              <!-- eye icon -->
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                   viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5
+                         c4.477 0 8.268 2.943 9.542 7
+                         -1.274 4.057-5.065 7-9.542 7
+                         -4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+              Detalles
+            </a>
           </td>
-          <td class="px-6 py-4">
-            {{ alum.email }}
+
+          <!-- ELIMINAR -->
+          <td class="px-6 py-4 text-center">
+            <a href="eliminar?id={{ alum.id }}"
+              class="inline-flex items-center gap-1 text-danger bg-neutral-primary border border-danger
+                     hover:bg-danger hover:text-white focus:ring-4 focus:ring-neutral-tertiary
+                     font-medium leading-5 rounded-base text-sm px-3 py-2.5">
+              
+              <!-- trash icon -->
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                   viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M19 7l-1 12H6L5 7M10 11v6M14 11v6M9 7V4h6v3"/>
+              </svg>
+              Eliminar
+            </a>
           </td>
 
-          <td class="px-6 py-4 text-right">
-            <div class="inline-flex gap-2">
-
-              <a href="detalles?id={{ alum.id }}"
-                 class="text-fg-brand bg-neutral-primary border border-brand hover:bg-brand hover:text-white
-                        focus:ring-4 focus:ring-brand-subtle font-medium leading-5 rounded-base text-sm px-4 py-2.5">
-                Detalles
-              </a>
-
-              <a href="modificar?id={{ alum.id }}"
-                 class="text-warning bg-neutral-primary border border-warning hover:bg-warning hover:text-white
-                        focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm px-4 py-2.5">
-                Editar
-              </a>
-
-              <a href="eliminar?id={{ alum.id }}"
-                 class="text-danger bg-neutral-primary border border-danger hover:bg-danger hover:text-white
-                        focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm px-4 py-2.5">
-                Eliminar
-              </a>
-
-            </div>
-          </td>
         </tr>
         {% endfor %}
 
         {% if alumno|length == 0 %}
         <tr>
-          <td colspan="4" class="px-6 py-8 text-center text-gray-500">
+          <td colspan="6" class="px-6 py-8 text-center text-gray-500">
             No hay alumnos registrados.
           </td>
         </tr>
@@ -82,6 +112,52 @@
       </tbody>
     </table>
 
+  </div>
+</div>
+
+
+<!-- MODAL NUEVO -->
+<div id="modal-nuevo" tabindex="-1" aria-hidden="true"
+  class="hidden fixed top-0 left-0 right-0 z-50 justify-center items-center w-full h-full">
+  <div class="relative p-4 w-full max-w-lg">
+
+    <div class="bg-white rounded-lg shadow border border-gray-200">
+
+      <div class="flex items-center justify-between p-4 border-b">
+        <h3 class="text-lg font-semibold">Registrar alumno</h3>
+        <button type="button" data-modal-hide="modal-nuevo"
+          class="text-gray-400 hover:text-gray-900">
+          ✕
+        </button>
+      </div>
+
+      <div class="p-4">
+        <form method="POST" action="{{ url_for('Alumnos') }}">
+
+          {{ macros.datos('nombre', 'Ej: Mario') }}
+          {{ macros.datos('apaterno', 'Ej: Lopez') }}
+          {{ macros.datos('email', 'Ej: mario@mail.com', type='email') }}
+
+          <div class="flex justify-end gap-2 mt-4">
+            <button type="button" data-modal-hide="modal-nuevo"
+              class="text-body bg-neutral-primary border border-default
+                     hover:bg-neutral-secondary-soft hover:text-heading
+                     rounded-base text-sm px-4 py-2.5">
+              Cancelar
+            </button>
+
+            <button type="submit"
+              class="text-success bg-neutral-primary border border-success
+                     hover:bg-success hover:text-white
+                     rounded-base text-sm px-4 py-2.5">
+              Guardar
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
   </div>
 </div>
 
