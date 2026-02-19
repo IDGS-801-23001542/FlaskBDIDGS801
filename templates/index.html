@@ -8,14 +8,13 @@
 
   <div class="relative overflow-x-auto bg-white shadow-sm rounded-lg border border-gray-200">
 
-    <!-- Barra superior -->
     <div class="p-3 border-b border-gray-200">
       <button data-modal-target="modal-nuevo" data-modal-toggle="modal-nuevo" type="button"
         class="w-full inline-flex items-center gap-2 justify-start
                text-success bg-neutral-primary border border-success
                hover:bg-success hover:text-white focus:ring-4 focus:ring-neutral-tertiary
                font-medium leading-5 rounded-base text-sm px-4 py-3 focus:outline-none">
-        <!-- icon + -->
+
         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
           <path d="M10 4a1 1 0 0 1 1 1v4h4a1 1 0 1 1 0 2h-4v4a1 1 0 1 1-2 0v-4H5a1 1 0 1 1 0-2h4V5a1 1 0 0 1 1-1z"/>
         </svg>
@@ -23,7 +22,6 @@
       </button>
     </div>
 
-    <!-- TABLA -->
     <table class="w-full text-sm text-left text-gray-700">
       <thead class="bg-gray-50 border-b border-gray-200">
         <tr>
@@ -43,14 +41,12 @@
           <td class="px-6 py-4">{{ alum.apaterno }}</td>
           <td class="px-6 py-4">{{ alum.email }}</td>
 
-          <!-- EDITAR -->
           <td class="px-6 py-4 text-center">
             <a href="modificar?id={{ alum.id }}"
               class="inline-flex items-center gap-1 text-warning bg-neutral-primary border border-warning
                      hover:bg-warning hover:text-white focus:ring-4 focus:ring-neutral-tertiary
                      font-medium leading-5 rounded-base text-sm px-3 py-2.5">
               
-              <!-- pencil icon -->
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
                    viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -60,14 +56,12 @@
             </a>
           </td>
 
-          <!-- DETALLES -->
           <td class="px-6 py-4 text-center">
             <a href="detalles?id={{ alum.id }}"
               class="inline-flex items-center gap-1 text-fg-brand bg-neutral-primary border border-brand
                      hover:bg-brand hover:text-white focus:ring-4 focus:ring-brand-subtle
                      font-medium leading-5 rounded-base text-sm px-3 py-2.5">
               
-              <!-- eye icon -->
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
                    viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -82,14 +76,12 @@
             </a>
           </td>
 
-          <!-- ELIMINAR -->
           <td class="px-6 py-4 text-center">
             <a href="eliminar?id={{ alum.id }}"
               class="inline-flex items-center gap-1 text-danger bg-neutral-primary border border-danger
                      hover:bg-danger hover:text-white focus:ring-4 focus:ring-neutral-tertiary
                      font-medium leading-5 rounded-base text-sm px-3 py-2.5">
               
-              <!-- trash icon -->
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
                    viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -115,8 +107,6 @@
   </div>
 </div>
 
-
-<!-- MODAL NUEVO -->
 <div id="modal-nuevo" tabindex="-1" aria-hidden="true"
   class="hidden fixed top-0 left-0 right-0 z-50 justify-center items-center w-full h-full">
   <div class="relative p-4 w-full max-w-lg">

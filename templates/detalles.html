@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block container %}
+
+<div class="w-full flex justify-center px-4 py-10">
+
+  <div class="max-w-md w-full bg-white border border-gray-200 rounded-lg shadow-sm">
+    
+    <div class="flex flex-col items-center py-10">
+
+      <img class="w-22 h-22 mb-4 rounded-full shadow-md"
+           src="{{ url_for('static', filename='img/images.jpg') }}"
+           alt="Alumno" />
+
+      <div class="flex flex-col justify-between p-4 leading-normal text-center">
+        
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+          Nombre: {{ nombre }}
+        </h5>
+
+        <h3 class="mb-2 text-xl tracking-tight text-gray-900">
+          Apellidos: {{ apaterno }}
+        </h3>
+
+        <h3 class="mb-2 text-xl tracking-tight text-gray-900">
+          Correo: {{ email }}
+        </h3>
+
+      </div>
+
+      <div class="flex gap-3 mt-6">
+        <a href="{{ url_for('index') }}"
+           class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+          Regresar
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

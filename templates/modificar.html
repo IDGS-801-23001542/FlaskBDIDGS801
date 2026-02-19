@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% import "_macros.html" as macros %}
+{% block container %}
+
+<div class="w-full max-w-xl px-4 py-8">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">Modificar alumno</h2>
+
+  <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
+    <form method="POST" action="{{ url_for('modificar') }}">
+
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <input type="hidden" name="id" value="{{ form.id.data }}">
+
+      <div class="mb-3">
+        <label for="nombre" class="form-label">nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre"
+               placeholder="Ej: Mario" value="{{ form.nombre.data }}">
+      </div>
+
+      <div class="mb-3">
+        <label for="apaterno" class="form-label">apaterno</label>
+        <input type="text" class="form-control" id="apaterno" name="apaterno"
+               placeholder="Ej: Lopez" value="{{ form.apaterno.data }}">
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">email</label>
+        <input type="email" class="form-control" id="email" name="email"
+               placeholder="Ej: mario@mail.com" value="{{ form.email.data }}">
+      </div>
+
+      <div class="flex gap-3 mt-4">
+        <button type="submit"
+          class="text-success bg-neutral-primary border border-success hover:bg-success hover:text-white focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+          Guardar
+        </button>
+
+        <a href="{{ url_for('index') }}"
+          class="text-body bg-neutral-primary border border-default hover:bg-neutral-secondary-soft hover:text-heading focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+          Cancelar
+        </a>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}
