@@ -7,14 +7,9 @@ from config import DevelopmentConfig
 import forms
 from models import db, Alumnos as AlumnosModel
 
-from flask_migrate import Migrate
-
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
 csrf = CSRFProtect()
-
-db.init_app(app)
-migrate = Migrate(app, db)
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -33,11 +28,14 @@ def detalles():
     if request.method == 'GET':
         id = request.args.get('id')
         alum1 = db.session.query(AlumnosModel).filter(AlumnosModel.id == id).first()
+
         id = request.args.get('id')
         nombre = alum1.nombre
-        apaterno = alum1.apaterno
+        apallidos = alum1.apallidos
         email = alum1.email
-        return render_template('detalles.html', id=id, nombre=nombre, apaterno=apaterno, email=email)
+        telefono = alum1.telefono
+
+        return render_template('detalles.html', id=id, nombre=nombre, apallidos=apallidos, email=email, telefono=telefono)
 
 @app.route('/modificar', methods=['GET', 'POST'])
 def modificar():
@@ -46,18 +44,23 @@ def modificar():
     if request.method == 'GET':
         id = request.args.get('id')
         alum1 = db.session.query(AlumnosModel).filter(AlumnosModel.id == id).first()
+
         create_form.id.data = request.args.get('id')
         create_form.nombre.data = str.rstrip(alum1.nombre)
-        create_form.apaterno.data = alum1.apaterno
+        create_form.apallidos.data = alum1.apallidos
         create_form.email.data = alum1.email
+        create_form.telefono.data = alum1.telefono
 
     if request.method == 'POST':
         id = create_form.id.data
         alum1 = db.session.query(AlumnosModel).filter(AlumnosModel.id == id).first()
+
         alum1.id = id
         alum1.nombre = str.rstrip(create_form.nombre.data)
-        alum1.apaterno = create_form.apaterno.data
+        alum1.apallidos = create_form.apallidos.data
         alum1.email = create_form.email.data
+        alum1.telefono = create_form.telefono.data
+
         db.session.add(alum1)
         db.session.commit()
         return redirect(url_for('index'))
@@ -71,8 +74,9 @@ def Alumnos():
     if request.method == 'POST':
         alum = AlumnosModel(
             nombre=create_form.nombre.data,
-            apaterno=create_form.apaterno.data,
-            email=create_form.email.data
+            apallidos=create_form.apallidos.data,
+            email=create_form.email.data,
+            telefono=create_form.telefono.data
         )
         db.session.add(alum)
         db.session.commit()
@@ -91,8 +95,9 @@ def eliminar():
         if alum1:
             create_form.id.data = request.args.get('id')
             create_form.nombre.data = str.rstrip(alum1.nombre)
-            create_form.apaterno.data = alum1.apaterno
+            create_form.apallidos.data = alum1.apallidos
             create_form.email.data = alum1.email
+            create_form.telefono.data = alum1.telefono
 
         return render_template('eliminar.html', form=create_form)
 
@@ -110,6 +115,7 @@ def eliminar():
 
 if __name__ == '__main__':
     csrf.init_app(app)
+    db.init_app(app)
     with app.app_context():
         db.create_all()
     app.run()

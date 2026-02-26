@@ -7,8 +7,8 @@
     
     <div class="flex flex-col items-center py-10">
 
-      <img class="w-22 h-22 mb-4 rounded-full shadow-md"
-           src="{{ url_for('static', filename='img/images.jpg') }}"
+      <img class="w-16 h-16 mb-4 rounded-full shadow-md object-cover"
+           src="{{ url_for('static', filename='img/toallin.png') }}"
            alt="Alumno" />
 
       <div class="flex flex-col justify-between p-4 leading-normal text-center">
@@ -18,7 +18,11 @@
         </h5>
 
         <h3 class="mb-2 text-xl tracking-tight text-gray-900">
-          Apellidos: {{ apaterno }}
+          Apellidos: {{ apallidos }}
+        </h3>
+
+        <h3 class="mb-2 text-xl tracking-tight text-gray-900">
+          Teléfono: {{ telefono }}
         </h3>
 
         <h3 class="mb-2 text-xl tracking-tight text-gray-900">
