@@ -3,7 +3,6 @@ from wtforms import StringField, IntegerField
 from wtforms import EmailField
 from wtforms import validators
 
-
 class UserForm(Form):
     matricula = IntegerField("Matricula", [
         validators.DataRequired(message="El campo es requerido"),
@@ -51,4 +50,31 @@ class UserForm2(Form):
     telefono = StringField('telefono', [
         validators.DataRequired(message="El telefono es requerido"),
         validators.Length(min=7, max=20, message="requiere min=7 max=20")
+    ])
+
+
+class MaestroForm(Form):
+    matricula = IntegerField("Matricula", [
+        validators.DataRequired(message="El campo es requerido"),
+        validators.NumberRange(min=100, max=999999, message="Ingrese valor valido")
+    ])
+
+    nombre = StringField("Nombre", [
+        validators.DataRequired(message="El campo es requerido"),
+        validators.Length(min=3, max=50, message="Ingrese nombre valido")
+    ])
+
+    apellidos = StringField("Apellidos", [
+        validators.DataRequired(message="El campo es requerido"),
+        validators.Length(min=3, max=50, message="Ingrese apellidos validos")
+    ])
+
+    especialidad = StringField("Especialidad", [
+        validators.DataRequired(message="El campo es requerido"),
+        validators.Length(min=3, max=50, message="Ingrese especialidad valida")
+    ])
+
+    email = EmailField("Email", [
+        validators.DataRequired(message="El correo es requerido"),
+        validators.Email(message="Ingrese un correo valido")
     ])

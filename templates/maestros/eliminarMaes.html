@@ -2,17 +2,18 @@
 {% block container %}
 
 <div class="w-full max-w-xl px-4 py-8">
-  <h2 class="text-2xl font-bold mb-6">Eliminar alumno</h2>
+  <h2 class="text-2xl font-bold mb-6">Eliminar maestro</h2>
 
   <div class="bg-white border rounded-lg p-6">
-    <form method="POST" action="{{ url_for('alumnos.eliminar') }}">
+    <form method="POST" action="{{ url_for('maestros.eliminar_maestros') }}">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <input type="hidden" name="id" value="{{ form.id.data }}">
+      <input type="hidden" name="matricula" value="{{ form.matricula.data }}">
 
+      <p><strong>Matrícula:</strong> {{ form.matricula.data }}</p>
       <p><strong>Nombre:</strong> {{ form.nombre.data }}</p>
-      <p><strong>Apellidos:</strong> {{ form.apallidos.data }}</p>
+      <p><strong>Apellidos:</strong> {{ form.apellidos.data }}</p>
+      <p><strong>Especialidad:</strong> {{ form.especialidad.data }}</p>
       <p><strong>Email:</strong> {{ form.email.data }}</p>
-      <p><strong>Teléfono:</strong> {{ form.telefono.data }}</p>
 
       <div class="flex gap-3 mt-4">
         <button type="submit"
@@ -20,7 +21,7 @@
           Eliminar
         </button>
 
-        <a href="{{ url_for('alumnos.index') }}"
+        <a href="{{ url_for('maestros.listado_maestros') }}"
            class="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
           Regresar
         </a>

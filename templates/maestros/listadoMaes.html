@@ -4,12 +4,12 @@
 
 <div class="w-full max-w-6xl px-4 py-6">
 
-  <h2 class="text-2xl font-bold text-gray-800 mb-4">Alumnos</h2>
+  <h2 class="text-2xl font-bold text-gray-800 mb-4">Maestros</h2>
 
   <div class="relative overflow-x-auto bg-white shadow-sm rounded-lg border border-gray-200">
 
     <div class="p-3 border-b border-gray-200">
-      <button data-modal-target="modal-nuevo" data-modal-toggle="modal-nuevo" type="button"
+      <button data-modal-target="modal-nuevo-maes" data-modal-toggle="modal-nuevo-maes" type="button"
         class="w-full inline-flex items-center gap-2 justify-start
                text-success bg-neutral-primary border border-success
                hover:bg-success hover:text-white focus:ring-4 focus:ring-neutral-tertiary
@@ -25,9 +25,10 @@
     <table class="w-full text-sm text-left text-gray-700">
       <thead class="bg-gray-50 border-b border-gray-200">
         <tr>
+          <th class="px-6 py-3 font-semibold">Matrícula</th>
           <th class="px-6 py-3 font-semibold">Nombre</th>
           <th class="px-6 py-3 font-semibold">Apellidos</th>
-          <th class="px-6 py-3 font-semibold">Teléfono</th>
+          <th class="px-6 py-3 font-semibold">Especialidad</th>
           <th class="px-6 py-3 font-semibold">Correo</th>
           <th class="px-6 py-3 font-semibold text-center">Editar</th>
           <th class="px-6 py-3 font-semibold text-center">Detalles</th>
@@ -36,41 +37,31 @@
       </thead>
 
       <tbody>
-        {% for alum in alumno %}
+        {% for m in maestros %}
         <tr class="bg-white border-b border-gray-200">
 
-          <td class="px-6 py-4 font-medium text-gray-900">
-            {{ alum.nombre }}
-          </td>
-
-          <td class="px-6 py-4">
-            {{ alum.apallidos }}
-          </td>
-
-          <td class="px-6 py-4">
-            {{ alum.telefono }}
-          </td>
-
-          <td class="px-6 py-4">
-            {{ alum.email }}
-          </td>
+          <td class="px-6 py-4 font-medium text-gray-900">{{ m.matricula }}</td>
+          <td class="px-6 py-4">{{ m.nombre }}</td>
+          <td class="px-6 py-4">{{ m.apellidos }}</td>
+          <td class="px-6 py-4">{{ m.especialidad }}</td>
+          <td class="px-6 py-4">{{ m.email }}</td>
 
           <td class="px-6 py-4 text-center">
-            <a href="modificar?id={{ alum.id }}"
+            <a href="{{ url_for('maestros.modificar_maestros') }}?matricula={{ m.matricula }}"
                class="inline-block text-white bg-warning box-border border border-transparent hover:bg-warning-strong focus:ring-4 focus:ring-warning-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
               Editar
             </a>
           </td>
 
           <td class="px-6 py-4 text-center">
-            <a href="detalles?id={{ alum.id }}"
+            <a href="{{ url_for('maestros.detalles_maestros') }}?matricula={{ m.matricula }}"
                class="inline-block text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
               Detalles
             </a>
           </td>
 
           <td class="px-6 py-4 text-center">
-            <a href="eliminar?id={{ alum.id }}"
+            <a href="{{ url_for('maestros.eliminar_maestros') }}?matricula={{ m.matricula }}"
                class="inline-block text-white bg-danger box-border border border-transparent hover:bg-danger-strong focus:ring-4 focus:ring-danger-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
               Eliminar
             </a>
@@ -79,10 +70,10 @@
         </tr>
         {% endfor %}
 
-        {% if alumno|length == 0 %}
+        {% if maestros|length == 0 %}
         <tr>
-          <td colspan="7" class="px-6 py-8 text-center text-gray-500">
-            No hay alumnos registrados.
+          <td colspan="8" class="px-6 py-8 text-center text-gray-500">
+            No hay maestros registrados.
           </td>
         </tr>
         {% endif %}
@@ -94,22 +85,23 @@
 </div>
 
 
-<div id="modal-nuevo" class="hidden fixed top-0 left-0 right-0 z-50 justify-center items-center w-full h-full">
+<div id="modal-nuevo-maes" class="hidden fixed top-0 left-0 right-0 z-50 justify-center items-center w-full h-full">
   <div class="relative p-4 w-full max-w-lg">
     <div class="bg-white rounded-lg shadow border border-gray-200">
 
       <div class="flex items-center justify-between p-4 border-b">
-        <h3 class="text-lg font-semibold">Registrar alumno</h3>
+        <h3 class="text-lg font-semibold">Registrar maestro</h3>
       </div>
 
       <div class="p-4">
-        <form method="POST" action="{{ url_for('alumnos.Alumnos') }}">
+        <form method="POST" action="{{ url_for('maestros.listado_maestros') }}">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-          {{ macros.datos('nombre', 'Ej: Mario') }}
-          {{ macros.datos('apallidos', 'Ej: López Pérez') }}
-          {{ macros.datos('telefono', 'Ej: 4771234567') }}
-          {{ macros.datos('email', 'Ej: mario@mail.com', type='email') }}
+          {{ macros.datos('matricula', 'Ej: 123', type='number') }}
+          {{ macros.datos('nombre', 'Ej: Juan') }}
+          {{ macros.datos('apellidos', 'Ej: Pérez López') }}
+          {{ macros.datos('especialidad', 'Ej: Matemáticas') }}
+          {{ macros.datos('email', 'Ej: prof@mail.com', type='email') }}
 
           <div class="flex justify-end gap-2 mt-4">
             <button type="submit"

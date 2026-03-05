@@ -5,7 +5,7 @@
   <h2 class="text-2xl font-bold mb-6">Modificar alumno</h2>
 
   <div class="bg-white border rounded-lg p-6">
-    <form method="POST" action="{{ url_for('modificar') }}">
+    <form method="POST" action="{{ url_for('alumnos.modificar') }}">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <input type="hidden" name="id" value="{{ form.id.data }}">
 
@@ -14,9 +14,17 @@
       <input type="email" name="email" value="{{ form.email.data }}" class="form-control mb-3">
       <input type="text" name="telefono" value="{{ form.telefono.data }}" class="form-control mb-3">
 
-      <button type="submit" class="bg-green-600 text-white px-4 py-2">
-        Guardar
-      </button>
+      <div class="flex gap-3 mt-4">
+        <button type="submit"
+          class="text-white bg-success box-border border border-transparent hover:bg-success-strong focus:ring-4 focus:ring-success-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+          Guardar
+        </button>
+
+        <a href="{{ url_for('alumnos.index') }}"
+           class="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+          Regresar
+        </a>
+      </div>
     </form>
   </div>
 </div>
