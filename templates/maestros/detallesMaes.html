@@ -35,11 +35,23 @@
       </div>
 
       <div class="flex gap-3 mt-6">
-        <a href="{{ url_for('maestros.listado_maestros') }}"
-           class="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
-          Regresar
+      <div class="relative">
+        <a href="{{ url_for('maestros.listado_maestros') }}" data-tooltip-target="tt-maes-back-det"
+          class="inline-flex items-center justify-center w-10 h-10 text-body bg-neutral-secondary-medium
+                border border-default-medium hover:bg-neutral-tertiary-medium focus:ring-4 focus:ring-neutral-tertiary rounded-base">
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+          </svg>
+          <span class="sr-only">Regresar</span>
         </a>
+
+        <div id="tt-maes-back-det" role="tooltip"
+          class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip">
+          Regresar
+          <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
       </div>
+</div>
 
     </div>
   </div>

@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+{% block container %}
+
+<div class="w-full max-w-5xl px-4 py-8">
+  <h2 class="text-2xl font-bold text-gray-800 mb-2">Alumnos inscritos</h2>
+
+  <div class="bg-white border border-gray-200 rounded-lg p-4 mb-4">
+    <p><strong>Curso:</strong> {{ curso.nombre }}</p>
+    <p><strong>Maestro:</strong> {{ maestro.nombre }} {{ maestro.apellidos }} ({{ maestro.matricula }})</p>
+  </div>
+
+  <div class="relative overflow-x-auto bg-white shadow-sm rounded-lg border border-gray-200">
+    <table class="w-full text-sm text-left text-gray-700">
+      <thead class="bg-gray-50 border-b border-gray-200">
+        <tr>
+          <th class="px-6 py-3 font-semibold">Nombre</th>
+          <th class="px-6 py-3 font-semibold">Apellidos</th>
+          <th class="px-6 py-3 font-semibold">Email</th>
+          <th class="px-6 py-3 font-semibold text-center">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for a in alumnos %}
+        <tr class="bg-white border-b border-gray-200">
+          <td class="px-6 py-4 font-medium text-gray-900">{{ a.nombre }}</td>
+          <td class="px-6 py-4">{{ a.apallidos }}</td>
+          <td class="px-6 py-4">{{ a.email }}</td>
+
+          <td class="px-6 py-4">
+            <div class="flex justify-center">
+              <form method="POST" action="{{ url_for('cursos.quitar_alumno') }}" class="inline">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="curso_id" value="{{ curso.id }}">
+                <input type="hidden" name="alumno_id" value="{{ a.id }}">
+
+                <div class="relative inline-block">
+                  <button type="submit" data-tooltip-target="tt-quitar-{{ a.id }}"
+                    class="inline-flex items-center justify-center w-10 h-10 text-white bg-danger hover:bg-danger-strong
+                           focus:ring-4 focus:ring-danger-medium rounded-base">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                    </svg>
+                    <span class="sr-only">Quitar</span>
+                  </button>
+
+                  <div id="tt-quitar-{{ a.id }}" role="tooltip"
+                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip">
+                    Quitar del curso
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+
+        {% if alumnos|length == 0 %}
+        <tr>
+          <td colspan="4" class="px-6 py-8 text-center text-gray-500">
+            No hay alumnos inscritos en este curso.
+          </td>
+        </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-4">
+    <div class="relative inline-block">
+      <a href="{{ url_for('cursos.listado_cursos') }}"
+         data-tooltip-target="tt-curso-back"
+         class="inline-flex items-center justify-center w-10 h-10 text-body bg-neutral-secondary-medium
+                border border-default-medium hover:bg-neutral-tertiary-medium focus:ring-4 focus:ring-neutral-tertiary rounded-base">
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+        </svg>
+        <span class="sr-only">Regresar</span>
+      </a>
+
+      <div id="tt-curso-back" role="tooltip"
+        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip">
+        Regresar
+        <div class="tooltip-arrow" data-popper-arrow></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

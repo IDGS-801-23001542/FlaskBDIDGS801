@@ -7,23 +7,26 @@ from models import db, Maestros as MaestrosModel
 
 
 @maestros.route('/maestros', methods=['GET', 'POST'])
+@maestros.route('/maestros/index', methods=['GET', 'POST'])
 def listado_maestros():
     create_form = forms.MaestroForm(request.form)
 
     if request.method == 'POST':
-        if hasattr(create_form, "validate") and not create_form.validate():
-            flash("Revisa los datos del formulario.", "warning")
-            return redirect(url_for('maestros.listado_maestros'))
+        if not create_form.validate():
+            flash("Revisa los datos del formulario. La matrícula no debe repetirse y debe ser válida.", "warning")
+            maes = MaestrosModel.query.all()
+            return render_template("maestros/listadoMaes.html", form=create_form, maestros=maes)
 
         matricula = create_form.matricula.data
 
         existe = MaestrosModel.query.filter_by(matricula=matricula).first()
         if existe:
             flash(f"La matrícula {matricula} ya está registrada.", "warning")
-            return redirect(url_for('maestros.listado_maestros'))
+            maes = MaestrosModel.query.all()
+            return render_template("maestros/listadoMaes.html", form=create_form, maestros=maes)
 
         maes = MaestrosModel(
-            matricula=matricula,
+            matricula=create_form.matricula.data,
             nombre=create_form.nombre.data,
             apellidos=create_form.apellidos.data,
             especialidad=create_form.especialidad.data,
@@ -33,12 +36,13 @@ def listado_maestros():
         try:
             db.session.add(maes)
             db.session.commit()
-            flash("Maestro registrado.", "success")
+            flash("Maestro registrado correctamente.", "success")
+            return redirect(url_for('maestros.listado_maestros'))
         except IntegrityError:
             db.session.rollback()
             flash(f"La matrícula {matricula} ya está registrada.", "warning")
-
-        return redirect(url_for('maestros.listado_maestros'))
+            maes = MaestrosModel.query.all()
+            return render_template("maestros/listadoMaes.html", form=create_form, maestros=maes)
 
     maes = MaestrosModel.query.all()
     return render_template("maestros/listadoMaes.html", form=create_form, maestros=maes)
@@ -83,8 +87,7 @@ def modificar_maestros():
 
         return render_template('maestros/modificarMaes.html', form=create_form)
 
-    # POST
-    if hasattr(create_form, "validate") and not create_form.validate():
+    if not create_form.validate():
         flash("Revisa los datos del formulario.", "warning")
         return render_template('maestros/modificarMaes.html', form=create_form)
 
@@ -101,7 +104,7 @@ def modificar_maestros():
     maes1.email = create_form.email.data
 
     db.session.commit()
-    flash("Maestro actualizado.", "success")
+    flash("Maestro actualizado correctamente.", "success")
     return redirect(url_for('maestros.listado_maestros'))
 
 
@@ -131,7 +134,7 @@ def eliminar_maestros():
     if maes1:
         db.session.delete(maes1)
         db.session.commit()
-        flash("Maestro eliminado.", "success")
+        flash("Maestro eliminado correctamente.", "danger")
     else:
         flash("No se encontró el maestro.", "warning")
 

@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block container %}
+
+<div class="w-full max-w-3xl bg-white border border-gray-200 rounded-lg shadow-sm p-10 text-center">
+
+    <h1 class="text-3xl font-bold text-gray-800 mb-4">
+        Bienvenido al Sistema de Escuelas
+    </h1>
+
+    <p class="text-gray-600 mb-8">
+        Este sistema permite gestionar información de <strong>alumnos</strong>,
+        <strong>maestros</strong> y <strong>cursos</strong>.  
+        También permite realizar la inscripción de alumnos a cursos y consultar
+        qué maestro imparte cada materia. si es para un 10, cualquier duda vaya directo a https://chatgpt.com
+    </p>
+
+    <div class="flex justify-center">
+        <img 
+            src="{{ url_for('static', filename='img/escuela.png') }}"
+            alt="Escuela"
+            class="rounded-lg shadow-md max-h-80"
+        >
+    </div>
+
+</div>
+
+{% endblock %}

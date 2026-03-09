@@ -4,14 +4,14 @@
 
 <div class="w-full max-w-6xl px-4 py-6">
 
-  <h2 class="text-2xl font-bold text-gray-800 mb-4">Maestros</h2>
+  <h2 class="text-2xl font-bold text-gray-800 mb-4">Alumnos</h2>
 
   <div class="relative overflow-x-auto bg-white shadow-sm rounded-lg border border-gray-200">
 
     <div class="p-3 border-b border-gray-200 flex items-center justify-between">
       <div class="relative">
-        <button data-modal-target="modal-nuevo-maes" data-modal-toggle="modal-nuevo-maes" type="button"
-          data-tooltip-target="tt-maes-nuevo"
+        <button data-modal-target="modal-nuevo" data-modal-toggle="modal-nuevo" type="button"
+          data-tooltip-target="tt-alum-nuevo"
           class="inline-flex items-center justify-center w-10 h-10 text-success bg-neutral-primary border border-success
                  hover:bg-success hover:text-white focus:ring-4 focus:ring-neutral-tertiary rounded-base">
 
@@ -21,7 +21,7 @@
           <span class="sr-only">Nuevo</span>
         </button>
 
-        <div id="tt-maes-nuevo" role="tooltip"
+        <div id="tt-alum-nuevo" role="tooltip"
           class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip">
           Nuevo
           <div class="tooltip-arrow" data-popper-arrow></div>
@@ -32,31 +32,44 @@
     <table class="w-full text-sm text-left text-gray-700">
       <thead class="bg-gray-50 border-b border-gray-200">
         <tr>
-          <th class="px-6 py-3 font-semibold">Matrícula</th>
           <th class="px-6 py-3 font-semibold">Nombre</th>
           <th class="px-6 py-3 font-semibold">Apellidos</th>
-          <th class="px-6 py-3 font-semibold">Especialidad</th>
+          <th class="px-6 py-3 font-semibold">Teléfono</th>
           <th class="px-6 py-3 font-semibold">Correo</th>
+          <th class="px-6 py-3 font-semibold">Cursos inscritos</th>
           <th class="px-6 py-3 font-semibold text-center">Acciones</th>
         </tr>
       </thead>
 
       <tbody>
-        {% for m in maestros %}
+        {% for alum in alumno %}
         <tr class="bg-white border-b border-gray-200">
 
-          <td class="px-6 py-4 font-medium text-gray-900">{{ m.matricula }}</td>
-          <td class="px-6 py-4">{{ m.nombre }}</td>
-          <td class="px-6 py-4">{{ m.apellidos }}</td>
-          <td class="px-6 py-4">{{ m.especialidad }}</td>
-          <td class="px-6 py-4">{{ m.email }}</td>
+          <td class="px-6 py-4 font-medium text-gray-900">{{ alum.nombre }}</td>
+          <td class="px-6 py-4">{{ alum.apallidos }}</td>
+          <td class="px-6 py-4">{{ alum.telefono }}</td>
+          <td class="px-6 py-4">{{ alum.email }}</td>
+
+          <td class="px-6 py-4">
+            {% if alum.cursos %}
+              <div class="flex flex-wrap gap-2">
+                {% for curso in alum.cursos %}
+                  <span class="inline-flex items-center px-2.5 py-1 text-xs font-medium text-brand bg-brand-soft rounded-full">
+                    {{ curso.nombre }}
+                  </span>
+                {% endfor %}
+              </div>
+            {% else %}
+              <span class="text-gray-500">Sin cursos inscritos</span>
+            {% endif %}
+          </td>
 
           <td class="px-6 py-4">
             <div class="flex justify-center gap-3">
 
               <div class="relative">
-                <a href="{{ url_for('maestros.modificar_maestros') }}?matricula={{ m.matricula }}"
-                   data-tooltip-target="tt-maes-edit-{{ m.matricula }}"
+                <a href="{{ url_for('alumnos.modificar') }}?id={{ alum.id }}"
+                   data-tooltip-target="tt-alum-edit-{{ alum.id }}"
                    class="inline-flex items-center justify-center w-10 h-10 text-white bg-warning hover:bg-warning-strong
                           focus:ring-4 focus:ring-warning-medium rounded-base">
                   <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -64,7 +77,7 @@
                   </svg>
                   <span class="sr-only">Editar</span>
                 </a>
-                <div id="tt-maes-edit-{{ m.matricula }}" role="tooltip"
+                <div id="tt-alum-edit-{{ alum.id }}" role="tooltip"
                   class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip">
                   Editar
                   <div class="tooltip-arrow" data-popper-arrow></div>
@@ -72,8 +85,8 @@
               </div>
 
               <div class="relative">
-                <a href="{{ url_for('maestros.detalles_maestros') }}?matricula={{ m.matricula }}"
-                   data-tooltip-target="tt-maes-det-{{ m.matricula }}"
+                <a href="{{ url_for('alumnos.detalles') }}?id={{ alum.id }}"
+                   data-tooltip-target="tt-alum-det-{{ alum.id }}"
                    class="inline-flex items-center justify-center w-10 h-10 text-white bg-brand hover:bg-brand-strong
                           focus:ring-4 focus:ring-brand-medium rounded-base">
                   <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
@@ -82,7 +95,7 @@
                   </svg>
                   <span class="sr-only">Detalles</span>
                 </a>
-                <div id="tt-maes-det-{{ m.matricula }}" role="tooltip"
+                <div id="tt-alum-det-{{ alum.id }}" role="tooltip"
                   class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip">
                   Detalles
                   <div class="tooltip-arrow" data-popper-arrow></div>
@@ -90,8 +103,8 @@
               </div>
 
               <div class="relative">
-                <a href="{{ url_for('maestros.eliminar_maestros') }}?matricula={{ m.matricula }}"
-                   data-tooltip-target="tt-maes-del-{{ m.matricula }}"
+                <a href="{{ url_for('alumnos.eliminar') }}?id={{ alum.id }}"
+                   data-tooltip-target="tt-alum-del-{{ alum.id }}"
                    class="inline-flex items-center justify-center w-10 h-10 text-white bg-danger hover:bg-danger-strong
                           focus:ring-4 focus:ring-danger-medium rounded-base">
                   <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -99,7 +112,7 @@
                   </svg>
                   <span class="sr-only">Eliminar</span>
                 </a>
-                <div id="tt-maes-del-{{ m.matricula }}" role="tooltip"
+                <div id="tt-alum-del-{{ alum.id }}" role="tooltip"
                   class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip">
                   Eliminar
                   <div class="tooltip-arrow" data-popper-arrow></div>
@@ -112,10 +125,10 @@
         </tr>
         {% endfor %}
 
-        {% if maestros|length == 0 %}
+        {% if alumno|length == 0 %}
         <tr>
           <td colspan="6" class="px-6 py-8 text-center text-gray-500">
-            No hay maestros registrados.
+            No hay alumnos registrados.
           </td>
         </tr>
         {% endif %}
@@ -127,34 +140,33 @@
 </div>
 
 
-<div id="modal-nuevo-maes" class="hidden fixed top-0 left-0 right-0 z-50 justify-center items-center w-full h-full">
+<div id="modal-nuevo" class="hidden fixed top-0 left-0 right-0 z-50 justify-center items-center w-full h-full">
   <div class="relative p-4 w-full max-w-lg">
     <div class="bg-white rounded-lg shadow border border-gray-200">
 
       <div class="flex items-center justify-between p-4 border-b">
-        <h3 class="text-lg font-semibold">Registrar maestro</h3>
+        <h3 class="text-lg font-semibold">Registrar alumno</h3>
       </div>
 
       <div class="p-4">
-        <form method="POST" action="{{ url_for('maestros.listado_maestros') }}">
+        <form method="POST" action="{{ url_for('alumnos.crear_alumno') }}">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-          {{ macros.datos('matricula', 'Ej: 123', type='number') }}
-          {{ macros.datos('nombre', 'Ej: Juan') }}
-          {{ macros.datos('apellidos', 'Ej: Pérez López') }}
-          {{ macros.datos('especialidad', 'Ej: Matemáticas') }}
-          {{ macros.datos('email', 'Ej: prof@mail.com', type='email') }}
+          {{ macros.datos('nombre', 'Ej: Mario') }}
+          {{ macros.datos('apallidos', 'Ej: López Pérez') }}
+          {{ macros.datos('telefono', 'Ej: 4771234567') }}
+          {{ macros.datos('email', 'Ej: mario@mail.com', type='email') }}
 
           <div class="flex justify-end gap-2 mt-4">
             <div class="relative">
-              <button type="submit" data-tooltip-target="tt-maes-save"
+              <button type="submit" data-tooltip-target="tt-alum-save"
                 class="inline-flex items-center justify-center w-10 h-10 text-white bg-success hover:bg-success-strong focus:ring-4 focus:ring-success-medium rounded-base">
                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
                 </svg>
                 <span class="sr-only">Guardar</span>
               </button>
-              <div id="tt-maes-save" role="tooltip"
+              <div id="tt-alum-save" role="tooltip"
                 class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip">
                 Guardar
                 <div class="tooltip-arrow" data-popper-arrow></div>

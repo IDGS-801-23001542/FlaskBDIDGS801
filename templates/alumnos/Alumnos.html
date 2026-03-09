@@ -6,8 +6,8 @@
   <h2 class="text-2xl font-bold text-gray-800 mb-6">Registrar alumno</h2>
 
   <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
-    <form method="POST" action="{{ url_for('Alumnos') }}">
-      {{ form.hidden_tag() }}
+  <form method="POST" action="{{ url_for('alumnos.crear_alumno') }}">
+        {{ form.hidden_tag() }}
 
       {{ macros.datos('nombre', 'Ej: Mario') }}
       {{ macros.datos('apaterno', 'Ej: Lopez') }}
@@ -19,7 +19,7 @@
           Guardar
         </button>
 
-        <a href="{{ url_for('index') }}"
+        <a ref="{{ url_for('alumnos.index') }}"
           class="text-body bg-neutral-primary border border-default hover:bg-neutral-secondary-soft hover:text-heading focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
           Cancelar
         </a>

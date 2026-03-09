@@ -2,40 +2,31 @@
 {% block container %}
 
 <div class="w-full max-w-xl px-4 py-8">
-  <h2 class="text-2xl font-bold text-gray-800 mb-6">Modificar maestro</h2>
+  <h2 class="text-2xl font-bold mb-6">Modificar alumno</h2>
 
-  <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
-    <form method="POST" action="{{ url_for('maestros.modificar_maestros') }}">
+  <div class="bg-white border rounded-lg p-6">
+    <form method="POST" action="{{ url_for('alumnos.modificar') }}">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="id" value="{{ form.id.data }}">
 
-      <label class="block mb-2">Matricula</label>
-      <input class="border w-full mb-4 p-2" type="number" name="matricula" value="{{ form.matricula.data }}" readonly>
-
-      <label class="block mb-2">Nombre</label>
-      <input class="border w-full mb-4 p-2" type="text" name="nombre" value="{{ form.nombre.data }}">
-
-      <label class="block mb-2">Apellidos</label>
-      <input class="border w-full mb-4 p-2" type="text" name="apellidos" value="{{ form.apellidos.data }}">
-
-      <label class="block mb-2">Especialidad</label>
-      <input class="border w-full mb-4 p-2" type="text" name="especialidad" value="{{ form.especialidad.data }}">
-
-      <label class="block mb-2">Email</label>
-      <input class="border w-full mb-4 p-2" type="email" name="email" value="{{ form.email.data }}">
+      <input type="text" name="nombre" value="{{ form.nombre.data }}" class="form-control mb-3">
+      <input type="text" name="apallidos" value="{{ form.apallidos.data }}" class="form-control mb-3">
+      <input type="email" name="email" value="{{ form.email.data }}" class="form-control mb-3">
+      <input type="text" name="telefono" value="{{ form.telefono.data }}" class="form-control mb-3">
 
       <div class="flex gap-3 mt-4">
 
         <div class="relative">
-          <button type="submit" data-tooltip-target="tt-maes-save-edit"
-            class="inline-flex items-center justify-center w-10 h-10 text-white bg-warning hover:bg-warning-strong
-                   focus:ring-4 focus:ring-warning-medium rounded-base">
+          <button type="submit" data-tooltip-target="tt-alum-save-edit"
+            class="inline-flex items-center justify-center w-10 h-10 text-white bg-success hover:bg-success-strong
+                   focus:ring-4 focus:ring-success-medium rounded-base">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
             </svg>
             <span class="sr-only">Guardar</span>
           </button>
 
-          <div id="tt-maes-save-edit" role="tooltip"
+          <div id="tt-alum-save-edit" role="tooltip"
             class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip">
             Guardar
             <div class="tooltip-arrow" data-popper-arrow></div>
@@ -43,7 +34,7 @@
         </div>
 
         <div class="relative">
-          <a href="{{ url_for('maestros.listado_maestros') }}" data-tooltip-target="tt-maes-back"
+          <a href="{{ url_for('alumnos.index') }}" data-tooltip-target="tt-alum-back"
             class="inline-flex items-center justify-center w-10 h-10 text-body bg-neutral-secondary-medium
                    border border-default-medium hover:bg-neutral-tertiary-medium focus:ring-4 focus:ring-neutral-tertiary rounded-base">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -52,7 +43,7 @@
             <span class="sr-only">Regresar</span>
           </a>
 
-          <div id="tt-maes-back" role="tooltip"
+          <div id="tt-alum-back" role="tooltip"
             class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip">
             Regresar
             <div class="tooltip-arrow" data-popper-arrow></div>
@@ -60,7 +51,6 @@
         </div>
 
       </div>
-
     </form>
   </div>
 </div>

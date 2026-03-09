@@ -2,23 +2,22 @@
 {% block container %}
 
 <div class="w-full max-w-xl px-4 py-8">
-  <h2 class="text-2xl font-bold mb-6">Eliminar maestro</h2>
+  <h2 class="text-2xl font-bold mb-6">Eliminar alumno</h2>
 
   <div class="bg-white border rounded-lg p-6">
-    <form method="POST" action="{{ url_for('maestros.eliminar_maestros') }}">
+    <form method="POST" action="{{ url_for('alumnos.eliminar') }}">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <input type="hidden" name="matricula" value="{{ form.matricula.data }}">
+      <input type="hidden" name="id" value="{{ form.id.data }}">
 
-      <p><strong>Matrícula:</strong> {{ form.matricula.data }}</p>
       <p><strong>Nombre:</strong> {{ form.nombre.data }}</p>
-      <p><strong>Apellidos:</strong> {{ form.apellidos.data }}</p>
-      <p><strong>Especialidad:</strong> {{ form.especialidad.data }}</p>
+      <p><strong>Apellidos:</strong> {{ form.apallidos.data }}</p>
       <p><strong>Email:</strong> {{ form.email.data }}</p>
+      <p><strong>Teléfono:</strong> {{ form.telefono.data }}</p>
 
       <div class="flex gap-3 mt-4">
 
         <div class="relative">
-          <button type="submit" data-tooltip-target="tt-maes-del"
+          <button type="submit" data-tooltip-target="tt-alum-del"
             class="inline-flex items-center justify-center w-10 h-10 text-white bg-danger hover:bg-danger-strong
                    focus:ring-4 focus:ring-danger-medium rounded-base">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -27,7 +26,7 @@
             <span class="sr-only">Eliminar</span>
           </button>
 
-          <div id="tt-maes-del" role="tooltip"
+          <div id="tt-alum-del" role="tooltip"
             class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip">
             Eliminar
             <div class="tooltip-arrow" data-popper-arrow></div>
@@ -35,7 +34,7 @@
         </div>
 
         <div class="relative">
-          <a href="{{ url_for('maestros.listado_maestros') }}" data-tooltip-target="tt-maes-back2"
+          <a href="{{ url_for('alumnos.index') }}" data-tooltip-target="tt-alum-back2"
             class="inline-flex items-center justify-center w-10 h-10 text-body bg-neutral-secondary-medium
                    border border-default-medium hover:bg-neutral-tertiary-medium focus:ring-4 focus:ring-neutral-tertiary rounded-base">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -44,7 +43,7 @@
             <span class="sr-only">Regresar</span>
           </a>
 
-          <div id="tt-maes-back2" role="tooltip"
+          <div id="tt-alum-back2" role="tooltip"
             class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip">
             Regresar
             <div class="tooltip-arrow" data-popper-arrow></div>

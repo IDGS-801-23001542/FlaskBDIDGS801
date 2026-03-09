@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block container %}
+
+<div class="w-full max-w-5xl px-4 py-8">
+
+  <h2 class="text-2xl font-bold text-gray-800 mb-4">Inscribir alumno</h2>
+
+  <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
+
+    <form method="POST" action="{{ url_for('cursos.inscribir_alumno') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <div class="mb-4">
+        <label class="form-label">Curso</label>
+        <select class="form-control" name="curso_id" required>
+          <option value="">Seleccionar</option>
+          {% for c in cursos %}
+            <option value="{{ c.id }}">
+              {{ c.nombre }} ({{ c.maestro.nombre }} {{ c.maestro.apellidos }})
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Alumno</label>
+        <select class="form-control" name="alumno_id" required>
+          <option value="">Seleccionar</option>
+          {% for a in alumnos %}
+            <option value="{{ a.id }}">
+              {{ a.nombre }} {{ a.apallidos }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="flex justify-end gap-3 mt-6">
+
+        <div class="relative">
+          <a href="{{ url_for('cursos.listado_cursos') }}"
+             data-tooltip-target="tt-ins-back"
+             class="inline-flex items-center justify-center w-10 h-10 text-body bg-neutral-secondary-medium
+                    border border-default-medium hover:bg-neutral-tertiary-medium focus:ring-4 focus:ring-neutral-tertiary rounded-base">
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+            </svg>
+            <span class="sr-only">Regresar</span>
+          </a>
+
+          <div id="tt-ins-back" role="tooltip"
+            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip">
+            Regresar
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <button type="submit"
+            data-tooltip-target="tt-ins-save"
+            class="inline-flex items-center justify-center w-10 h-10 text-white bg-brand hover:bg-brand-strong
+                   focus:ring-4 focus:ring-brand-medium rounded-base">
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+            </svg>
+            <span class="sr-only">Inscribir</span>
+          </button>
+
+          <div id="tt-ins-save" role="tooltip"
+            class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip">
+            Inscribir
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+{% endblock %}

@@ -1,10 +1,5 @@
 from flask import Blueprint
 
-alumnos = Blueprint(
-    'alumnos',
-    __name__,
-    template_folder='templates',
-    static_folder='static'
-)
+alumnos = Blueprint('alumnos', __name__)
 
 from . import routes
